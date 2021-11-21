@@ -4,7 +4,7 @@ import os
 from os import scandir 
 from os import listdir
 from matplotlib import pyplot as plt
-import src.core as co
+import img_processing.core as co
 
 
 import tkinter as tk
