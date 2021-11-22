@@ -84,3 +84,87 @@ def plot_diameter(img, x,y1,w):
         lineType)
     
     return img
+
+
+def classify_scratches(img):
+    '''
+    The function checks if there is a scratch on the cable
+
+    Parameters
+    ----------
+    img : Array of uint8
+        The image in which the values are to be drawn
+
+    Returns
+    -------
+    center_coordinates : tuple of int
+        the center  (x,y) of the scratch
+
+    '''
+    
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray,(25,25),0)
+
+    sobelxy = cv2.Sobel(gray,cv2.CV_64F,1,1,ksize=5)  
+    sobelxy = cv2.convertScaleAbs(sobelxy) # covert to 8-bit
+    
+    ret, th = cv2.threshold(sobelxy, 6, 255, cv2.THRESH_BINARY)
+    kernel = np.ones((3,3),np.uint8)
+    opening = cv2.morphologyEx(th, cv2.MORPH_OPEN, kernel)
+    kernel = np.ones((4,4),np.uint8)
+    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+    
+    params = cv2.SimpleBlobDetector_Params()
+    # Filter by Area.
+    params.filterByArea = True
+    params.minArea = 7
+    
+    detector = cv2.SimpleBlobDetector_create(params)
+    # Detect blobs.
+    keypoints = detector.detect(closing)
+    
+    if not keypoints:
+        print("No scratch were  found")
+        return 0
+    
+    else:
+        area = []
+        coordinates = []
+    
+        for key in keypoints:
+            area.append(key.size)
+            coordinates.append(key.pt)
+            
+        center_coordinates = (int(coordinates[0][0]), int(coordinates[0][1]))
+        
+        return center_coordinates
+    
+    
+def mark_defect(img, center_coordinates):
+    '''
+    This function draws a red circle around given coordinates
+    
+
+    Parameters
+    ----------
+    img : Array of uint8
+        The image in which the values are to be drawn
+        
+    center_coordinates : tuple of int
+        the center  (x,y) of the defect
+        
+
+    Returns
+    -------
+    img : Array of uint8
+        the image with the marking
+
+    '''
+    # Parameter
+    radius = 50
+    color = (10, 0, 255)
+    thickness = 3
+    # Draw a circle with blue line borders of thickness of 2 px
+    img = cv2.circle(img, center_coordinates, radius, color, thickness)
+    
+    return img

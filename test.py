@@ -10,6 +10,8 @@ import img_processing.core as co
 import tkinter as tk
 from tkinter import filedialog
 
+
+#%%
 root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
@@ -38,6 +40,16 @@ for y1 in y:
 cv2.imshow('img_plot', img_plot)
 cv2.imwrite('img_plot.png', img_plot)
 cv2.waitKey(0)
+
+#%%
+# detect sratch 
+
+center  = co.classify_scratches(img)
+img_with_mark = co.mark_defect(img,center)
+
+cv2.imshow('img_plot', img_with_mark)
+cv2.waitKey(0)
+
 
 
 print ("end")

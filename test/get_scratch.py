@@ -3,8 +3,13 @@
 import cv2
 import numpy as np
 
-#%%
+#
 image = cv2.imread(r'C:\Users\Jonas Meier\Development\Taymer-Computer-Vision-Challenge\Input Images\Scratches.bmp')
+# image = cv2.imread(r'C:\Users\Jonas Meier\Development\Taymer-Computer-Vision-Challenge\Input Images\Cut.bmp')
+# image = cv2.imread(r'C:\Users\Jonas Meier\Development\Taymer-Computer-Vision-Challenge\Input Images\Pin-Hole and cut.bmp')
+
+
+
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray,(25,25),0)
 
@@ -32,9 +37,9 @@ params = cv2.SimpleBlobDetector_Params()
 # params.minThreshold = 200
 # params.maxThreshold = 255
 
-# # Filter by Area.
-# params.filterByArea = True
-# params.minArea = 55
+# Filter by Area.
+params.filterByArea = True
+params.minArea = 7
 
 
 # # Filter by Circularity
@@ -53,6 +58,12 @@ detector = cv2.SimpleBlobDetector_create(params)
 
 # Detect blobs.
 keypoints = detector.detect(closing)
+
+
+if not keypoints:
+    print("list is  empty")
+else:
+    print("list is not empty") 
 area = []
 coordinates = []
 
@@ -79,6 +90,26 @@ thickness = 3
 # Using cv2.circle() method
 # Draw a circle with blue line borders of thickness of 2 px
 image = cv2.circle(image, center_coordinates, radius, color, thickness)
+
+
+
+# plot value
+font                   = cv2.FONT_HERSHEY_SIMPLEX
+bottomLeftCornerOfText = (int(coordinates[0][0]) + 75 , int(coordinates[0][1]))
+fontScale              = 0.5
+fontColor              = (0,0,255)
+thickness              = 1
+lineType               = 2
+text  = "Defect:" + " Scratch"
+
+cv2.putText(image,text, 
+    bottomLeftCornerOfText, 
+    font, 
+    fontScale,
+    fontColor,
+    thickness,
+        lineType)
+
 
 #%%
 
