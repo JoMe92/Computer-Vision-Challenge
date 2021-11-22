@@ -168,3 +168,44 @@ def mark_defect(img, center_coordinates):
     img = cv2.circle(img, center_coordinates, radius, color, thickness)
     
     return img
+
+
+def label_defect(img, coordinates, defect_name):
+    '''
+    the function adds a label to the given coordinates
+
+    Parameters
+    ----------
+    img :  Array of uint8
+        The image in which the values are to be drawn
+        
+    coordinates : tuple of int
+        the center  (x,y) of the defect
+        
+    defect_name : str
+        Name of the error
+
+    Returns
+    -------
+    img : Array of uint8
+        the image with the marking
+
+    '''
+    # plot value
+    font                   = cv2.FONT_HERSHEY_SIMPLEX
+    bottomLeftCornerOfText = (int(coordinates[0]) + 75 , int(coordinates[1]))
+    fontScale              = 0.5
+    fontColor              = (0,0,255)
+    thickness              = 1
+    lineType               = 2
+    text  = "Defect:" + defect_name
+    
+    cv2.putText(img,text, 
+        bottomLeftCornerOfText, 
+        font, 
+        fontScale,
+        fontColor,
+        thickness,
+            lineType)
+    
+    return img

@@ -46,6 +46,8 @@ cv2.waitKey(0)
 
 center  = co.classify_scratches(img)
 img_with_mark = co.mark_defect(img,center)
+img_with_mark = co.label_defect(img_with_mark,center,"scratch")
+
 
 cv2.imshow('img_plot', img_with_mark)
 cv2.waitKey(0)
