@@ -20,6 +20,7 @@ class MainWindow(QMainWindow):
         self.ui.pushButton.clicked.connect(self.loadImage)
         self.ui.pushButton_2.clicked.connect(self.savePhoto)
         self.ui.pushButton_3.clicked.connect(self.measure_dist)
+        self.ui.pushButton_4.clicked.connect(self.detect_defect)
 
 
         # initalization of the default parameters
@@ -49,6 +50,22 @@ class MainWindow(QMainWindow):
             self.image = core.plot_diameter(self.image, x, y, w)
         #self.image = core.plot_diameter(self.image, 500,500,50)
         self.setPhoto(self.image)
+
+
+    def detect_defect(self, image):
+        """
+
+
+        """
+
+        print("This function is currently in development. Please contact jonasmeier@posteo.de for more information.")
+
+        center_coordinates = core.classify_scratches(self.image)
+        self.image = core.mark_defect(self.image, center_coordinates)
+        self.image = core.label_defect(self.image, center_coordinates, "scratch")
+
+        self.setPhoto(self.image)
+
 
     def setPhoto(self,image):
         """ This function will take image input and resize it
