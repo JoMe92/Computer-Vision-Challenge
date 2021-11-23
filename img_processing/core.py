@@ -198,7 +198,7 @@ def label_defect(img, coordinates, defect_name):
     fontColor              = (0,0,255)
     thickness              = 1
     lineType               = 2
-    text  = "Defect:" + defect_name
+    text  = "Defect: " + defect_name
     
     cv2.putText(img,text, 
         bottomLeftCornerOfText, 
