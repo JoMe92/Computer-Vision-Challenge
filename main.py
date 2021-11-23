@@ -1,8 +1,7 @@
 import sys
 from PySide2 import  QtWidgets
-from mainwindow import MainWindow
+from Gui.mainwindow import MainWindow
 
-from ../img_processing import core 
 
 
 if __name__ == "__main__":

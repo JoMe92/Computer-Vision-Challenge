@@ -7,7 +7,7 @@ from tkinter import filedialog
 
 from img_processing import core
 
-from ui_main import Ui_MainWindow
+from Gui.ui_main import Ui_MainWindow
 
 
 class MainWindow(QMainWindow):
