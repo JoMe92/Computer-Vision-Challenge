@@ -41,17 +41,15 @@ The upper image shows the original image and the patch areas to be examined. Car
 
 
 ### Gabor transform 
-[Fabric Defect Detection Using Fourier Transform and Gabor Filters](https://www.researchgate.net/publication/323046716_Fabric_Defect_Detection_Using_Fourier_Transform_and_Gabor_Filters)
-
-[Tutorial 74 - What are Gabor filters and how to use them to generate features for machine learning](https://www.youtube.com/watch?v=yn1NUwaxhZg)
-
-[58 - What are Gabor filters?](https://www.youtube.com/watch?v=QEz4bG9P3Qs)
-
-
+The Gabor transform, named after Dennis Gabor, is a special case of the short-time Fourier transform. It is used to determine the sinusoidal frequency and phase content of local sections of a signal as it changes over time. The function to be transformed is first multiplied by a Gaussian function, which can be regarded as a window function, and the resulting function is then transformed with a Fourier transform to derive the time-frequency analysis. [[Wikipedia](https://en.wikipedia.org/wiki/Gabor_transform)]
+In the tutorial "[What are Gabor filters?](https://www.youtube.com/watch?v=QEz4bG9P3Qs)" is described how gabor filter can be used with OpenCv. Furthermore the meaning of the parameters to be set is explained. The figure below shows the original image on the left, the filtered image in the middle and the kernel used on the right.
 <img src="https://github.com/JoMe92/Taymer-Computer-Vision-Challenge/blob/main/Output%20Images/horizontal Gabor filter.png" align="center"
      alt="img" >
+The orientation of the cursor was chosen horizontally in order to segment lateral cuts. Es wurden Folgende PArameter verwendet: ksize = 50, sigma = 3, theta = 1*np.pi*1/2, lamda = 1*np.pi *1/4, gamma = 0.7, phi = 0  
+In conclusion, the Gabor filter is well suited for defect detection when the direction of the defect is already known. 
 
-
+By using a larger dataset, a classifier could be developed using SVM or Random Forest. First, the Gabor filter would be parameterized for classification purposes "[How to create Gabor feature banks](https://www.youtube.com/watch?v=BTbIS1mriuY)". Afterwards, the classifier can be trained with the data and a test train split "[Training RF](https://www.youtube.com/watch?v=XmRKkMjD8hM&t=563s
+)". In the video "[Image Segmentation](https://www.youtube.com/watch?v=f205EmfXi84)" Describes how the model can be saved and used for classification
 ### to Read
 local binary pattern (LBP)
 
