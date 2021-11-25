@@ -60,11 +60,18 @@ class MainWindow(QMainWindow):
 
         print("This function is currently in development. Please contact jonasmeier@posteo.de for more information.")
 
-        center_coordinates = core.classify_scratches(self.image)
-        self.image = core.mark_defect(self.image, center_coordinates)
-        self.image = core.label_defect(self.image, center_coordinates, "scratch")
+        image_disp = self.image
+        center_coordinates = core.classify_scratches(image_disp)
+        image_disp = core.mark_defect(image_disp, center_coordinates)
+        image_disp = core.label_defect(image_disp, center_coordinates, "scratch")
+        
 
-        self.setPhoto(self.image)
+        center_coordinates_cut = core.get_cut(image_disp) 
+        ce_co = center_coordinates_cut[0]
+        image_disp = core.mark_defect(image_disp, ce_co)
+        image_disp = core.label_defect(image_disp, ce_co, "cut")
+
+        self.setPhoto(image_disp)
 
 
     def setPhoto(self,image):
@@ -73,7 +80,7 @@ class MainWindow(QMainWindow):
             to set at the label.
         """
         self.tmp = image
-        # image = imutils.resize(image,width=640)
+        image = imutils.resize(image,width=640)
         frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = QtGui.QImage(frame, frame.shape[1],frame.shape[0],frame.strides[0],QtGui.QImage.Format_RGB888)
 		

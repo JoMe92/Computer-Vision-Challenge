@@ -139,6 +139,57 @@ def classify_scratches(img):
         
         return center_coordinates
     
+
+def get_cut(img):
+    '''
+    The function checks if there is a horizontal cut in the cable
+
+    Parameters
+    ----------
+    img : Array of uint8
+        the input image to be analyzed
+
+    Returns
+    -------
+    center_coordinates : list of tuples with int
+        each tuple contains the x and y coordinates of the center of gravity of the defect
+
+    '''
+    
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    ksize = 50  #Use size that makes sense to the image and fetaure size. Large may not be good. 
+    sigma = 3 #Large sigma on small features will fully miss the features. 
+    theta = 1*np.pi*1/2  # Horizintal lines
+    lamda = 1*np.pi *1/4  #1/4 works best for angled. 
+    gamma = 0.01  #Value of 1 defines spherical. Calue close to 0 has high aspect ratio
+    phi = 0  #Phase offset. I leave it to 0. 
+    kernel = cv2.getGaborKernel((ksize, ksize), sigma, theta, lamda, gamma, phi, ktype=cv2.CV_32F)
+    fimg = cv2.filter2D(img, cv2.CV_8UC3, kernel)
+    # plt.imshow(fimg, cmap=plt.cm.gray)
+    
+    ret, th = cv2.threshold(fimg, 35, 255, cv2.THRESH_BINARY)
+    kernel = np.ones((2,2),np.uint8)
+    opening = cv2.morphologyEx(th, cv2.MORPH_OPEN, kernel)
+    dilation = cv2.dilate(opening,kernel,iterations = 6)
+    
+    cnts = cv2.findContours(dilation, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    cnts = cnts[0]
+
+    center_coordinates = []
+    for cn in cnts:
+        area = cv2.contourArea(cn)
+    
+        if (area > 850 and area < 3000):
+            # cv2.drawContours(img_orig, cn, -1,color , radius)
+            M = cv2.moments(cn)
+            cX = int(M["m10"] / M["m00"])
+            cY = int(M["m01"] / M["m00"])
+            coordinates = (cX, cY)
+            center_coordinates.append(coordinates)
+            
+    return center_coordinates
+
     
 def mark_defect(img, center_coordinates):
     '''
@@ -209,3 +260,5 @@ def label_defect(img, coordinates, defect_name):
             lineType)
     
     return img
+
+

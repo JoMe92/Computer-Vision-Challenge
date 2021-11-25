@@ -9,15 +9,17 @@ In `Taymer-Computer-Vision-Challenge` an application for the measurement and CLa
 Contents
 ========
 
- * [Why?](#why)
+ * [User interface](#user-interface)
  * [Main Task](#main-task)
  * [Used Algorithms](#used-algorithms)
  * [Usage](#usage)
  <!--- * [Installation](#installation) --->
 
-## Why?
+## User interface
 ---
-
+In the following, the functionality of the user interface is described. Pictures can be taken, which are displayed in the screen and then the line can be measured.  Another function is to detect if the line is faulty.
+<img src="https://github.com/JoMe92/Taymer-Computer-Vision-Challenge/blob/main/Output%20Images/glcm.png" align="center"
+     alt="img" >
 
 ## Main Task
 ---
