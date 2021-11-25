@@ -4,19 +4,19 @@ from skimage import data
 import cv2
 import numpy as np
 
-PATCH_SIZE = 25
+PATCH_SIZE = 10
 
 # open the camera image
 image = cv2.imread(r'C:\Users\Jonas Meier\Development\Taymer-Computer-Vision-Challenge\Input Images\Cut.bmp') #data.camera()
 	
 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-# select some patches from grassy areas of the image
+# select some patches from cable areas of the image
 cabel_locations = [] 
 
 for x in np.arange(0,500,50):
     tup = (x,275)
     cabel_locations.append(tup)
-    tup1 = (x,285)
+    tup1 = (x,295)
     cabel_locations.append(tup1)
 for x in np.arange(600,1000,50):
     tup = (x,320)
@@ -32,15 +32,20 @@ for loc in cabel_locations:
 
 # select some defect areas
 defect_locations = [] 
-for x in np.arange(270,320,5):
+for x in np.arange(260,340,PATCH_SIZE + 1):
     tup = (490,x)
     defect_locations.append(tup)
+
+    tup1 = (490 + PATCH_SIZE + 1  , x)
+    defect_locations.append(tup1)
+
+
 defect_patches = []
 for loc in defect_locations:
     defect_patches.append(image[loc[0]:loc[0] + PATCH_SIZE,
                                loc[1]:loc[1] + PATCH_SIZE])
 
-# select some patches from sky areas of the image
+# select some patches from the backround areas of the image
 backround_locations = []
 
 for x in np.arange(0,1000,100):
@@ -92,28 +97,25 @@ for patch in (defect_patches):
 # create the figure
 fig = plt.figure(figsize=(8, 8))
 # display original image with locations of patches
-ax = fig.add_subplot(3, 2, 1)
+ax = fig.add_subplot(2, 1, 1)
 ax.imshow(image, cmap=plt.cm.gray,
           vmin=0, vmax=255)
 for (y, x) in cabel_locations:
     ax.plot(x + PATCH_SIZE / 2, y + PATCH_SIZE / 2, 'bs')
 for (y, x) in backround_locations:
     ax.plot(x + PATCH_SIZE / 2, y + PATCH_SIZE / 2, 'rs')
-
 for (y, x) in defect_locations:
     ax.plot(x + PATCH_SIZE / 2, y + PATCH_SIZE / 2, 'gs')
-ax.set_xlabel('Original Image')
+ax.set_xlabel('Original Image with the patch areas')
 ax.set_xticks([])
 ax.set_yticks([])
 ax.axis('image')
 
 
-
-
 # for each patch, plot (dissimilarity, correlation)
 ax = fig.add_subplot(2, 1, 2)
 ax.plot(xs, ys, 'b+',label='cable')
-ax.plot(xsb, ysb, 'r+',label='back')
+ax.plot(xsb, ysb, 'r+',label='background')
 ax.plot(xsd, ysd, 'g+',label='defect')
 ax.set_xlabel('GLCM Dissimilarity')
 ax.set_ylabel('GLCM Correlation')
