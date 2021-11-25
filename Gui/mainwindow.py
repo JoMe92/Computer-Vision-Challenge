@@ -73,7 +73,7 @@ class MainWindow(QMainWindow):
             to set at the label.
         """
         self.tmp = image
-        image = imutils.resize(image,width=640)
+        # image = imutils.resize(image,width=640)
         frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = QtGui.QImage(frame, frame.shape[1],frame.shape[0],frame.strides[0],QtGui.QImage.Format_RGB888)
 		

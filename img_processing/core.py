@@ -26,7 +26,7 @@ def get_diameter(img, y1 ):
     gray = cv2.GaussianBlur(gray,(5,5),0)
     
     # Apply ROI to the image
-    y1 = 200
+    # y1 = 200
     y2 = y1 + 1
     gray_slice = gray[y1:y2,:]
     
