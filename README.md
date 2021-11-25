@@ -3,7 +3,7 @@
 
 
      
-In `Taymer-Computer-Vision-Challenge` an application for the measurement and CLassification of cables is developed. It is possible to load images via a graphical user interface. Using function buttons, the width of the cabel can be measured, an error can be detected and KLAssified, and the image can be saved with overly.
+In `Taymer-Computer-Vision-Challenge` an application for the measurement and CLassification of cables is developed. It is possible to load images via a graphical user interface. Using function buttons, the width of the cabel can be measured, an error can be detected and Classified, and the image can be saved with overly.
 
 
 Contents
@@ -40,8 +40,19 @@ In the following section, it is evaluated whether the GLCM algorithm is suitable
 The upper image shows the original image and the patch areas to be examined. Care has been taken to ensure that the individual areas do not overlap and that there is a minimum distance of 1 pixel between the areas. Below is the graph for the evaluation of the GLCM algorithm, it shows the Calculate texture properties of the GLCM. It is shown that the texture analysis is suitable for separating the cable from the background but cannot be used for the classification of the defect.
 
 
-### Gabor transform is a type of windowed short-time Fourier transform
+### Gabor transform 
+[Fabric Defect Detection Using Fourier Transform and Gabor Filters](https://www.researchgate.net/publication/323046716_Fabric_Defect_Detection_Using_Fourier_Transform_and_Gabor_Filters)
 
+[Tutorial 74 - What are Gabor filters and how to use them to generate features for machine learning](https://www.youtube.com/watch?v=yn1NUwaxhZg)
+
+[58 - What are Gabor filters?](https://www.youtube.com/watch?v=QEz4bG9P3Qs)
+
+
+<img src="https://github.com/JoMe92/Taymer-Computer-Vision-Challenge/blob/main/Output%20Images/horizontal Gabor filter.png" align="center"
+     alt="img" >
+
+
+### to Read
 local binary pattern (LBP)
 
 scale-invariant feature transform (SIFT) 
