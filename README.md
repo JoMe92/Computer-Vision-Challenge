@@ -1,8 +1,7 @@
 # Taymer-Computer-Vision-Challenge
 
 
-<img src=".png" align="right"
-     alt="img" >
+
      
 In `Taymer-Computer-Vision-Challenge` an application for the measurement and CLassification of cables is developed. It is possible to load images via a graphical user interface. Using function buttons, the width of the cabel can be measured, an error can be detected and KLAssified, and the image can be saved with overly.
 
@@ -12,34 +11,36 @@ Contents
 
  * [Why?](#why)
  * [Main Task](#main-task)
- * [Roadmap](#roadmap)
+ * [Used Algorithms](#used-algorithms)
  * [Usage](#usage)
  <!--- * [Installation](#installation) --->
 
-### Why?
+## Why?
 ---
 
 
-### Main Task
+## Main Task
 ---
 
 
 
 
-### Roadmap 
+## Used algorithms 
 ---
 
-grey-level cooccurrence matrix (GLCM)
-https://answers.opencv.org/question/10671/glcm-matrix/
-https://arxiv.org/ftp/arxiv/papers/1310/1310.7170.pdf
-https://prism.ucalgary.ca/handle/1880/51900
-https://www.py4u.net/discuss/131043
-https://stackoverflow.com/questions/52923606/how-to-implement-glcm-algorithm-in-pythonopencv-for-image-feature-extraction
+#### Grey-level Cooccurrence Matrix (GLCM)
+A co-occurrence matrix or co-occurrence distribution (also referred to as : gray-level co-occurrence matrices GLCMs) is a matrix that is defined over an image to be the distribution of co-occurring pixel values (grayscale values, or colors) at a given offset. Further information can be found at 
+[Wikipedia](https://en.wikipedia.org/wiki/Co-occurrence_matrix) and 
+[University of Calgary](https://prism.ucalgary.ca/handle/1880/51900)
 
-<img src="Output Images\Figure_1.png"
-     alt="img" 
+In the following section, it is evaluated whether the GLCM algorithm is suitable for the classification of defects such as scratch cuts or holes on calves. The function was implemented and evaluated using skimage. A test image was divided into three areas, the background, the cable and the defect. In each Brerich, 10x10 large pixel areas were viewed and analyzed with the GLCM. The following graph illustrates the results of the analysis.
+<img src="https://github.com/JoMe92/Taymer-Computer-Vision-Challenge/blob/main/Output%20Images/glcm.png" align="center"
+     alt="img" >
+     
+The upper image shows the original image and the patch areas to be examined. Care has been taken to ensure that the individual areas do not overlap and that there is a minimum distance of 1 pixel between the areas. Below is the graph for the evaluation of the GLCM algorithm, it shows the Calculate texture properties of the GLCM. It is shown that the texture analysis is suitable for separating the cable from the background but cannot be used for the classification of the defect.
 
-Gabor transform is a type of windowed short-time Fourier transform
+
+### Gabor transform is a type of windowed short-time Fourier transform
 
 local binary pattern (LBP)
 
