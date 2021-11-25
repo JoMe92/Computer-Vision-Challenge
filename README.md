@@ -1,7 +1,7 @@
 # Taymer-Computer-Vision-Challenge
 
 
-<img src="https://github.com/JoMe92/Film_Developing/blob/main/files/1336252_0504a.png" align="right"
+<img src=".png" align="right"
      alt="img" >
      
 In `Taymer-Computer-Vision-Challenge` an application for the measurement and CLassification of cables is developed. It is possible to load images via a graphical user interface. Using function buttons, the width of the cabel can be measured, an error can be detected and KLAssified, and the image can be saved with overly.
@@ -35,6 +35,9 @@ https://arxiv.org/ftp/arxiv/papers/1310/1310.7170.pdf
 https://prism.ucalgary.ca/handle/1880/51900
 https://www.py4u.net/discuss/131043
 https://stackoverflow.com/questions/52923606/how-to-implement-glcm-algorithm-in-pythonopencv-for-image-feature-extraction
+
+<img src="Output Images\Figure_1.png"
+     alt="img" 
 
 Gabor transform is a type of windowed short-time Fourier transform
 
