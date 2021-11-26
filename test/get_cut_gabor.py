@@ -74,6 +74,12 @@ def label_defect(img, coordinates, defect_name):
 img_orig = cv2.imread(r'C:\Users\Jonas Meier\Development\Taymer-Computer-Vision-Challenge\Input Images\Pin-Hole.bmp') #data.camera()
 img = cv2.cvtColor(img_orig, cv2.COLOR_BGR2GRAY)
 
+
+mask = cv2.dilate(img,np.ones((15,15),np.uint8),iterations = 6)
+# mask = img > 35
+# img[~mask] = 0
+
+
 ksize = 50  #Use size that makes sense to the image and fetaure size. Large may not be good. 
 sigma = 3 #Large sigma on small features will fully miss the features. 
 theta = 1*np.pi*1/2  # Horizintal lines
@@ -88,6 +94,9 @@ ret, th = cv2.threshold(fimg, 35, 255, cv2.THRESH_BINARY)
 kernel = np.ones((2,2),np.uint8)
 opening = cv2.morphologyEx(th, cv2.MORPH_OPEN, kernel)
 dilation = cv2.dilate(opening,kernel,iterations = 6)
+
+mask = img > 75
+fg = cv2.bitwise_or(dilation, img,  img > 90 )
 
 cnts = cv2.findContours(dilation, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 cnts = cnts[0]

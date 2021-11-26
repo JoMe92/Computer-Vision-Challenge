@@ -157,6 +157,10 @@ def get_cut(img):
     '''
     
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    mask = img > 35
+    img[~mask] = 0
+
+
 
     ksize = 50  #Use size that makes sense to the image and fetaure size. Large may not be good. 
     sigma = 3 #Large sigma on small features will fully miss the features. 
