@@ -1,0 +1,1 @@
+self.image = cv2.imread(self.filename)
