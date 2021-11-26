@@ -29,20 +29,14 @@ class MainWindow(QMainWindow):
 
 
     def loadImage(self):
-        """ This function will load the camera device, obtain the image
-            and set it to label using the setPhoto function
+        """ This function will load the Image
         """
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         self.image = cv2.imread(self.filename)
-        # self.image = core.plot_diameter(self.image, 500,500,50)
-
-
         self.setPhoto(self.image)
 
     def measure_dist(self, image):
-        """
-
-
+        """ this function measures the diameter of the cable
         """
         y1 = [100,300,600]
         for y in y1:
@@ -53,23 +47,27 @@ class MainWindow(QMainWindow):
 
 
     def detect_defect(self, image):
+        """ This function classifies the defect
         """
 
-
-        """
-
-        print("This function is currently in development. Please contact jonasmeier@posteo.de for more information.")
+        
 
         image_disp = self.image
         center_coordinates = core.classify_scratches(image_disp)
-        image_disp = core.mark_defect(image_disp, center_coordinates)
-        image_disp = core.label_defect(image_disp, center_coordinates, "scratch")
+        if not center_coordinates:
+            print("no scratches found")
+        else:
+            image_disp = core.mark_defect(image_disp, center_coordinates)
+            image_disp = core.label_defect(image_disp, center_coordinates, "scratch")
         
 
         center_coordinates_cut = core.get_cut(image_disp) 
-        ce_co = center_coordinates_cut[0]
-        image_disp = core.mark_defect(image_disp, ce_co)
-        image_disp = core.label_defect(image_disp, ce_co, "cut")
+        if not center_coordinates_cut:
+            print("no cut found")
+        else:
+            ce_co = center_coordinates_cut[0]
+            image_disp = core.mark_defect(image_disp, ce_co)
+            image_disp = core.label_defect(image_disp, ce_co, "cut")
 
         self.setPhoto(image_disp)
 
@@ -86,20 +84,10 @@ class MainWindow(QMainWindow):
 		
         self.ui.label.setPixmap(QtGui.QPixmap.fromImage(image))
 
-    def update(self):
-        """ This function will update the photo according to the
-            current values of blur and brightness and set it to photo label.
-        """
-        img = self.image
-        self.setPhoto(img)
-        # self.savePhoto()
-
-
     def savePhoto(self):
         """ This function will save the image"""
 
-
-        self.filename = 'Snapshot '+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.png'
+        self.filename = 'defectoutput_'+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.jpg'
         cv2.imwrite(self.filename,self.tmp)
         print('Image saved as:',self.filename)
 
