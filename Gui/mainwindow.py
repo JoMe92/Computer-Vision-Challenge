@@ -2,11 +2,8 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import QMainWindow, QFileDialog
 import cv2, time, imutils, os, numpy as np
 
-import tkinter as tk
-from tkinter import filedialog
 
 from img_processing import core
-
 from Gui.ui_main import Ui_MainWindow
 
 
@@ -26,6 +23,9 @@ class MainWindow(QMainWindow):
         # initalization of the default parameters
         self.filename = 'Img_'+str(time.strftime("%Y-%b-%d_at_%H.%M.%S %p"))+'.png' # Will hold the image address location
         self.tmp = None # Will hold the temporary image for display
+        self.image = None # Will hold        self.show_fft()
+        self.loadImage()
+        # self.setPhoto(self.image)
 
 
     def loadImage(self):
@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         self.image = cv2.imread(self.filename)
         self.setPhoto(self.image)
-        print(self.filename)
+        
 
     def setPhoto(self,img):
         """ This function will take image input and resize it
@@ -46,7 +46,7 @@ class MainWindow(QMainWindow):
         frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = QtGui.QImage(frame, frame.shape[1],frame.shape[0],frame.strides[0],QtGui.QImage.Format_RGB888)
         self.ui.label.setPixmap(QtGui.QPixmap.fromImage(img))
-
+    
     def measure_dist(self):
         """ this function measures the diameter of the cable
         """
@@ -94,51 +94,4 @@ class MainWindow(QMainWindow):
         print('Image saved as:',self.filename)
 
 
-
-    def plot_diameter(self, img, x,y1,w):
-        '''
-        These functions draw a line at the given x-y position in an image.
-
-        Parameters
-        ----------
-        img : Array of uint8
-            The image in which the values are to be drawn
-            
-        x : int
-            x position of the drawing.
-            
-        y1 : int
-            y position of the drawing.
-            
-        w : int
-            line width.
-
-        Returns
-        -------
-        img : TYPE
-            DESCRIPTION.
-
-        '''
-        point1 = (x , y1)
-        point2 = (x + w + 10,y1) 
-        cv2.line(img,point1,point2,(255,0,255))
-        
-        # plot value
-        font                   = cv2.FONT_HERSHEY_SIMPLEX
-        bottomLeftCornerOfText = point2
-        fontScale              = 0.3
-        fontColor              = (255,255,255)
-        thickness              = 1
-        lineType               = 2
-        text  = "Diameter = {} pix".format(w)
-        
-        cv2.putText(img,text, 
-            bottomLeftCornerOfText, 
-            font, 
-            fontScale,
-            fontColor,
-            thickness,
-            lineType)
-    
-        return img
 

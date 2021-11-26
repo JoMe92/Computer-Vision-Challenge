@@ -157,8 +157,8 @@ def get_cut(img):
     '''
     
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    mask = img > 35
-    img[~mask] = 0
+    # mask = img > 35
+    # img[~mask] = 0
 
 
 
