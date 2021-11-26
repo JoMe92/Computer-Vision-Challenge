@@ -24,8 +24,11 @@ class MainWindow(QMainWindow):
         self.filename = 'Img_'+str(time.strftime("%Y-%b-%d_at_%H.%M.%S %p"))+'.png' # Will hold the image address location
         self.tmp = None # Will hold the temporary image for display
         self.image = None # Will hold        self.show_fft()
-        self.loadImage()
+        # self.loadImage()
+        
         # self.setPhoto(self.image)
+        
+
 
 
     def loadImage(self):
@@ -33,7 +36,12 @@ class MainWindow(QMainWindow):
         """
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         self.image = cv2.imread(self.filename)
-        self.setPhoto(self.image)
+
+        if self.image is None:
+            print("img is empty")
+            pass
+        else:
+            self.setPhoto(self.image)
         
 
     def setPhoto(self,img):
@@ -45,6 +53,7 @@ class MainWindow(QMainWindow):
         img = imutils.resize(img,width=640)
         frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = QtGui.QImage(frame, frame.shape[1],frame.shape[0],frame.strides[0],QtGui.QImage.Format_RGB888)
+
         self.ui.label.setPixmap(QtGui.QPixmap.fromImage(img))
     
     def measure_dist(self):
@@ -78,13 +87,10 @@ class MainWindow(QMainWindow):
             print("no cut found")
         else:
             ce_co = center_coordinates_cut[0]
-            image_disp = core.mark_defect(image_disp, ce_co)
-            image_disp = core.label_defect(image_disp, ce_co, "cut")
-
-        self.setPhoto(image_disp)
-
-
-
+            self.draw_Ellipse(ce_co)
+            # image_disp = core.mark_defect(image_disp, ce_co)
+            # image_disp = core.label_defect(image_disp, ce_co, "cut")
+            # self.setPhoto(image_disp)
 
     def savePhoto(self):
         """ This function will save the image"""
@@ -93,5 +99,21 @@ class MainWindow(QMainWindow):
         cv2.imwrite(self.filename,self.tmp)
         print('Image saved as:',self.filename)
 
+    def draw_Ellipse(self,coordinates):
+        x = coordinates[0]
+        y = coordinates[1]
 
+        painter = QtGui.QPainter(self.ui.label.pixmap())
+        pen = QtGui.QPen()
+        pen.setWidth(5)
+        pen.setColor(QtGui.QColor('red'))
+        painter.setPen(pen)
+        painter.drawEllipse(x, y, 80.0, 110.0)
+        painter.end()
+        self.ui.label.adjustSize()
+        
+        # self.image.save(self.filename)
+        
+  
+  
 
