@@ -66,8 +66,12 @@ class MainWindow(QMainWindow):
         img = self.image
         for y in y1:
             x, w = core.get_diameter(img, y)
-            plot_img = core.plot_diameter(img, x, y, w)
-        self.setPhoto(plot_img)
+            # plot_img = core.plot_diameter(img, x, y, w)
+
+            self.plot_diameterQt((x, y), w)
+       
+       
+        # self.setPhoto(plot_img)
 
 
 
@@ -96,7 +100,7 @@ class MainWindow(QMainWindow):
         """ This function will save the image"""
 
         self.filename = 'defectoutput_'+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.png'
-                
+
         image = ImageQt.fromqpixmap(self.ui.label.grab())
         image.save(self.filename)
 
@@ -117,7 +121,6 @@ class MainWindow(QMainWindow):
         pen.setColor(QtGui.QColor('red'))
         painter.setPen(pen)
         painter.drawEllipse(x-rx/2, y-ry/2,rx, ry)
-
         # text font settings
         font = QtGui.QFont()
         font.setFamily('Times')
@@ -134,6 +137,50 @@ class MainWindow(QMainWindow):
         # self.ui.label_bot.setText(self.ui.label.pixmap())
         
         # self.image.save(self.filename)
+
+  
+    def plot_diameterQt(self,coordinates,w):
+        '''
+        These functions draw a line at the given x-y position in an image.
+
+        Parameters
+        ----------
+        x : int
+            x position of the drawing.
+            
+        y1 : int
+            y position of the drawing.
+            
+        w : int
+            line width.
+
+        Returns
+        -------
+        None
+
+        '''
+        x = coordinates[0]
+        y = coordinates[1]
+        print('center Point x: ' + str(x ))
+        print('center Point y: ' + str(y ))
+        print("start")
+        painter = QtGui.QPainter(self.ui.label.pixmap())
+        pen = QtGui.QPen()
+        pen.setWidth(5)
+        pen.setColor(QtGui.QColor('red'))
+        painter.setPen(pen)
         
-  
-  
+        painter.drawLine(x- 0.1*w ,y, x  , y) # int x1, int y1, int x2, int y2
+        painter.drawLine(x + w,y , x + w + 0.1*w, y) 
+
+        # text font settings
+        font = QtGui.QFont()
+        font.setFamily('Times')
+        font.setBold(True)
+        font.setPointSize(11)
+        painter.setFont(font)
+        painter.drawText(x + w + 0.2 * w, y, "diameter = " + str(w))
+
+        painter.end()
+        self.ui.label.adjustSize()
+
