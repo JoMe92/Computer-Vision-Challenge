@@ -13,7 +13,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(620, 556)
+        MainWindow.resize(1000, 1000)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -23,6 +23,8 @@ class Ui_MainWindow(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setText("")
         self.label.setObjectName("label")
+        # QtGui.QPixmap.fromImage(img)
+        # self.label.setPixmap(QtWidgets.QPixmap(QtWidgets.QString("ProgramImages/1618324317566.jpg")))
         self.gridLayout_2.addWidget(self.label, 0, 0, 1, 2)
         self.splitter = QtWidgets.QSplitter(self.centralwidget)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
