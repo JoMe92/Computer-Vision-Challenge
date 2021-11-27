@@ -1,7 +1,7 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import QMainWindow, QFileDialog
 import cv2, time, imutils, os, numpy as np
-
+from PIL import ImageQt
 
 from img_processing import core
 from Gui.ui_main import Ui_MainWindow
@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
         QImg = QtGui.QImage(img, img.shape[1],img.shape[0],img.strides[0],QtGui.QImage.Format_RGB888)
         pixmap = QtGui.QPixmap.fromImage(QImg)
         self.ui.label.setPixmap(pixmap)
-        self.ui.show()
+        # self.ui.show()
 
 
     def measure_dist(self):
@@ -85,24 +85,21 @@ class MainWindow(QMainWindow):
         
         
         center_coordinates_cut = core.get_cut(image_disp) 
-
         if not center_coordinates_cut:
             print("no cut found")
         else:
             ce_co = center_coordinates_cut[0]
-            self.draw_Ellipse(ce_co,"Defect: test")
-            # self.text_lable(self,ce_co,"Defect: test")
+            self.draw_Ellipse(ce_co,"Defect: Cut")
 
-            # image_disp = core.mark_defect(image_disp, ce_co)
-            # image_disp = core.label_defect(image_disp, ce_co, "cut")
-            # self.setPhoto(image_disp)
 
     def savePhoto(self):
         """ This function will save the image"""
 
-        self.filename = 'defectoutput_'+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.jpg'
-        cv2.imwrite(self.filename,self.tmp)
-        print('Image saved as:',self.filename)
+        self.filename = 'defectoutput_'+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.png'
+                
+        image = ImageQt.fromqpixmap(self.ui.label.grab())
+        image.save(self.filename)
+
 
     def draw_Ellipse(self,coordinates,text):
         '''This function draws a red elypse around the center point which is passed as (x,y) tuple.
