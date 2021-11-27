@@ -12,6 +12,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
 
         # Call the corresponding functions when interacting with the gui
         self.ui.pushButton.clicked.connect(self.loadImage)
@@ -24,11 +25,11 @@ class MainWindow(QMainWindow):
         self.filename = 'Img_'+str(time.strftime("%Y-%b-%d_at_%H.%M.%S %p"))+'.png' # Will hold the image address location
         self.tmp = None # Will hold the temporary image for display
         self.image = None # Will hold        self.show_fft()
+
         # self.loadImage()
         
         # self.setPhoto(self.image)
         
-
 
 
     def loadImage(self):
@@ -36,6 +37,12 @@ class MainWindow(QMainWindow):
         """
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         self.image = cv2.imread(self.filename)
+        img = self.image
+        self.x_size = img.shape[0]
+        self.y_size = img.shape[1]
+
+
+    
 
         if self.image is None:
             print("img is empty")
@@ -52,12 +59,10 @@ class MainWindow(QMainWindow):
         self.tmp = img
         # img = imutils.resize(img,width=640)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
         QImg = QtGui.QImage(img, img.shape[1],img.shape[0],img.strides[0],QtGui.QImage.Format_RGB888)
         pixmap = QtGui.QPixmap.fromImage(QImg)
         self.ui.label.setPixmap(pixmap)
-        # self.ui.show()
-
+        self.ui.label.setGeometry(0, 0, self.x_size, self.y_size)
 
     def measure_dist(self):
         """ this function measures the diameter of the cable
@@ -66,13 +71,7 @@ class MainWindow(QMainWindow):
         img = self.image
         for y in y1:
             x, w = core.get_diameter(img, y)
-            # plot_img = core.plot_diameter(img, x, y, w)
-
             self.plot_diameterQt((x, y), w)
-       
-       
-        # self.setPhoto(plot_img)
-
 
 
     def detect_defect(self):
@@ -117,6 +116,7 @@ class MainWindow(QMainWindow):
         ry = 120
         painter = QtGui.QPainter(self.ui.label.pixmap())
         pen = QtGui.QPen()
+        # pen settings
         pen.setWidth(5)
         pen.setColor(QtGui.QColor('red'))
         painter.setPen(pen)
@@ -128,15 +128,10 @@ class MainWindow(QMainWindow):
         font.setPointSize(15)
         painter.setFont(font)
         painter.drawText(x + rx*1.01, y, text)
-
         painter.end()
-        # self.ui.label.show()
-
-        self.ui.label.adjustSize()
-        # self.ui.label_top.setPixmap(self.ui.label.pixmap())
-        # self.ui.label_bot.setText(self.ui.label.pixmap())
-        
-        # self.image.save(self.filename)
+        self.ui.label.move(11, 11) 
+        self.ui.label.move(10, 10) 
+        # self.ui.label.adjustSize()
 
   
     def plot_diameterQt(self,coordinates,w):
@@ -180,7 +175,8 @@ class MainWindow(QMainWindow):
         font.setPointSize(11)
         painter.setFont(font)
         painter.drawText(x + w + 0.2 * w, y, "diameter = " + str(w))
-
         painter.end()
-        self.ui.label.adjustSize()
+        self.ui.label.move(11, 11) 
+        self.ui.label.move(10, 10) 
+        # self.ui.label.adjustSize()
 

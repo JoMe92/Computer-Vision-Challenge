@@ -86,6 +86,7 @@ def plot_diameter(img, x,y1,w):
     return img
 
 
+
 def classify_scratches(img):
     '''
     The function checks if there is a scratch on the cable
