@@ -85,9 +85,56 @@ def plot_diameter(img, x,y1,w):
     
     return img
 
+def distance_blob(kpt1, kpt2):
+    '''This function calculates the distance between two blob's
+    
+    Parameters
+    ----------
+    kpt1 : keypoints
+        first keypoints from cv2.SimpleBlobDetector_create(params).detect(img)
+
+    kpt2 : keypoints
+        second keypoints from cv2.SimpleBlobDetector_create(params).detect(img)
+    Returns
+    -------
+    dist : float
+        Distance between keypoints in pixels
+    '''
+
+    #create numpy array with keypoint positions
+    arr = np.array([kpt1.pt, kpt2.pt])
+    #return distance, calculted by pythagoras
+    dist = np.sqrt(np.sum((arr[0]-arr[1])**2))
+
+    return dist
+
+def distance_center_coordinates(center_coordinates_1,center_coordinates_2):
+    '''This function calculates the distance between two center coordinates
+    
+    Parameters
+    ----------
+    center_coordinates_1 : int
+        
+
+    center_coordinates_1 : int
+        
+    Returns
+    -------
+    dist : float
+        Distance between center coordinates in pixels
+    '''
+    x0 = center_coordinates_1[0]
+    y0 = center_coordinates_1[1]
+
+    x1 = center_coordinates_2[0]
+    y1 = center_coordinates_2[1]
+    #return distance, calculted by pythagoras
+    dist = np.sqrt((x0-x1)^2+(y0-y1)^2)
+
+    return dist
 
 
-def classify_scratches(img):
+def get_scratches(img):
     '''
     The function checks if there is a scratch on the cable
 
@@ -98,7 +145,7 @@ def classify_scratches(img):
 
     Returns
     -------
-    center_coordinates : tuple of int
+    center_coordinates :List with tuple of int
         the center  (x,y) of the scratch
 
     '''
@@ -117,13 +164,16 @@ def classify_scratches(img):
     
     params = cv2.SimpleBlobDetector_Params()
     # Filter by Area.
+    params.minDistBetweenBlobs = 500
     params.filterByArea = True
     params.minArea = 7
-    
+
     detector = cv2.SimpleBlobDetector_create(params)
     # Detect blobs.
     keypoints = detector.detect(closing)
-    
+
+    # print("Blob Distance: " + str(distance(keypoints[0], keypoints[1])))
+
     if not keypoints:
         print("No scratch were  found")
         return 0
@@ -132,13 +182,20 @@ def classify_scratches(img):
         area = []
         coordinates = []
     
-        for key in keypoints:
-            area.append(key.size)
-            coordinates.append(key.pt)
+        # for key in keypoints:
+
+        for i in np.arange(0,len(keypoints),1):
+            if len(keypoints) > 1:
+                print("Blob Distance: " + str(distance_blob(keypoints[i], keypoints[i + 1])))
+
+            area.append(keypoints[i].size)
+            coordinates.append(keypoints[i].pt)
+            # area.append(key.size)
+            # coordinates.append(key.pt)
             
-        center_coordinates = (int(coordinates[0][0]), int(coordinates[0][1]))
+        # center_coordinates = (int(coordinates[0][0]), int(coordinates[0][1]))
         
-        return center_coordinates
+        return coordinates
     
 
 def get_cut(img):
@@ -183,6 +240,8 @@ def get_cut(img):
 
     center_coordinates = []
     for cn in cnts:
+
+        # distance_center_coordinates(cnts)
         area = cv2.contourArea(cn)
     
         if (area > 850 and area < 3000):
@@ -195,7 +254,32 @@ def get_cut(img):
             
     return center_coordinates
 
+
+def get_pin_hole(img):
+    '''
+    this function searches for pinholes in the cable
     
+    Parameters
+    ----------
+    img : Array of uint8
+        The image to be analyzed in a cv2 bgr format
+        
+    Returns
+    -------
+    circles : list of tuple with int
+         Output vector of found circles. Each vector is encoded as 3 or 4 element floating-point vector (x,y,radius) or (x,y,radius,votes) 
+        
+    '''
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.medianBlur(gray, 9)
+    rows = gray.shape[0] 
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, rows / 8,
+                                param1=255, param2 = 10,minRadius=5, maxRadius=10)
+
+    return circles
+
+
 def mark_defect(img, center_coordinates):
     '''
     This function draws a red circle around given coordinates
