@@ -85,6 +85,28 @@ def plot_diameter(img, x,y1,w):
     
     return img
 
+def get_center(cnts):
+    '''
+    This function calculates the center point of a contour stored as arrays
+
+    Parameters
+    ----------
+    cnts : array
+        Detected contours stored as a vector of points 
+        
+    Returns
+    -------
+    coordinates : Tuple of Int
+        The (x,y) coordinate of the center point
+
+    '''
+    M = cv2.moments(cnts)
+    cX = int(M["m10"] / M["m00"])
+    cY = int(M["m01"] / M["m00"])
+    coordinates = (cX, cY)
+
+    return coordinates
+
 def distance_blob(kpt1, kpt2):
     '''This function calculates the distance between two blob's
     
@@ -129,7 +151,7 @@ def distance_center_coordinates(center_coordinates_1,center_coordinates_2):
     x1 = center_coordinates_2[0]
     y1 = center_coordinates_2[1]
     #return distance, calculted by pythagoras
-    dist = np.sqrt((x0-x1)^2+(y0-y1)^2)
+    dist = np.sqrt(np.abs((x0-x1))^2+np.abs((y0-y1))^2)
 
     return dist
 
@@ -239,18 +261,19 @@ def get_cut(img):
     cnts = cnts[0]
 
     center_coordinates = []
-    for cn in cnts:
-
-        # distance_center_coordinates(cnts)
-        area = cv2.contourArea(cn)
-    
+    n = 0
+    for i in np.arange(0,len(cnts),1):
+        area = cv2.contourArea(cnts[i]) # Filter the results according to the area 
         if (area > 850 and area < 3000):
-            # cv2.drawContours(img_orig, cn, -1,color , radius)
-            M = cv2.moments(cn)
-            cX = int(M["m10"] / M["m00"])
-            cY = int(M["m01"] / M["m00"])
-            coordinates = (cX, cY)
-            center_coordinates.append(coordinates)
+            n = n + 1 #n ist der zähler für den letzten gefunden Cut 
+            if i < len(cnts) - 1: # Calculate the distance between the last cut found and the current cut if the distance is too small, it is the same cut.
+                co1 = get_center(cnts[n])
+                co2 = get_center(cnts[i])
+                dist = distance_center_coordinates(co1,co2)
+                print("Distance betwen cut's: " + str(dist))
+                if dist > 10: 
+                    center_coordinates.append(co2)
+
             
     return center_coordinates
 
