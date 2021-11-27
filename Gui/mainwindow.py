@@ -77,16 +77,18 @@ class MainWindow(QMainWindow):
     def detect_defect(self):
         """ This function classifies the defect
         """
-         # Clasification of a scratch in the image
         image_disp = self.image
         cut_nr = 1
-
-        center_coordinates = core.get_scratches(image_disp)
-        if not center_coordinates:
-            print("no scratches found")
-        else:
-            for ce_co in center_coordinates:
-                self.draw_Ellipse(ce_co,"Defect: scratch")
+        # Clasification of a scratch in the image
+        is_active = False
+        if is_active == True:
+           
+            center_coordinates = core.get_scratches(image_disp)
+            if not center_coordinates:
+                print("no scratches found")
+            else:
+                for ce_co in center_coordinates:
+                    self.draw_Ellipse(ce_co,"Defect: scratch")
         
 
         # Clasification of a cut in the image
