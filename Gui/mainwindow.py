@@ -77,22 +77,35 @@ class MainWindow(QMainWindow):
     def detect_defect(self):
         """ This function classifies the defect
         """
-
+         # Clasification of a scratch in the image
         image_disp = self.image
-        # center_coordinates = core.classify_scratches(image_disp)
-        # if not center_coordinates:
-        #     print("no scratches found")
-        # else:
-        #     image_disp = core.mark_defect(image_disp, center_coordinates)
-        #     image_disp = core.label_defect(image_disp, center_coordinates, "scratch")
+        cut_nr = 1
+
+        center_coordinates = core.get_scratches(image_disp)
+        if not center_coordinates:
+            print("no scratches found")
+        else:
+            for ce_co in center_coordinates:
+                self.draw_Ellipse(ce_co,"Defect: scratch")
         
-        
+
+        # Clasification of a cut in the image
         center_coordinates_cut = core.get_cut(image_disp) 
         if not center_coordinates_cut:
             print("no cut found")
         else:
-            ce_co = center_coordinates_cut[0]
-            self.draw_Ellipse(ce_co,"Defect: Cut")
+            for ce_co in center_coordinates_cut:
+                self.draw_Ellipse(ce_co,"Defect: Cut {}".format(cut_nr))
+                cut_nr = cut_nr + 1
+
+        # Clasification of a pin_hole in the image
+        circles  = core.get_pin_hole(image_disp) 
+        if circles is not None:
+            circles = np.uint16(np.around(circles))
+            for i in circles[0, :]:
+                center = (i[0], i[1]) # circle center
+                radius = i[2]
+                self.draw_Ellipse(center,"Defect: pin_hole")
 
 
     def savePhoto(self):
