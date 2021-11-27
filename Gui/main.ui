@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
-    <height>556</height>
+    <width>974</width>
+    <height>819</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,6 +32,18 @@
      <widget class="QLabel" name="label">
       <property name="text">
        <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>ProgramImages/1618324317566.jpg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>label</cstring>
       </property>
      </widget>
     </item>
@@ -106,7 +118,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>620</width>
+     <width>974</width>
      <height>21</height>
     </rect>
    </property>
@@ -122,8 +134,8 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>525</y>
+     <x>62</x>
+     <y>766</y>
     </hint>
     <hint type="destinationlabel">
      <x>62</x>
@@ -138,12 +150,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>165</x>
-     <y>525</y>
+     <x>208</x>
+     <y>766</y>
     </hint>
     <hint type="destinationlabel">
      <x>164</x>
-     <y>485</y>
+     <y>460</y>
     </hint>
    </hints>
   </connection>
@@ -154,8 +166,8 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>246</x>
-     <y>525</y>
+     <x>323</x>
+     <y>766</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -170,11 +182,11 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>291</x>
-     <y>517</y>
+     <x>412</x>
+     <y>766</y>
     </hint>
     <hint type="destinationlabel">
-     <x>332</x>
+     <x>412</x>
      <y>443</y>
     </hint>
    </hints>
