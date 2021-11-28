@@ -100,6 +100,7 @@ class MainWindow(QMainWindow):
                     radius = i[2]
                     self.draw_Ellipse(center,"Defect: pin_hole")
 
+        self.savePhoto()
 
     def savePhoto(self):
         '''
