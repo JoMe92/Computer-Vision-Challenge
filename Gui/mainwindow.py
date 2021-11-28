@@ -4,7 +4,7 @@ import cv2, time, os, numpy as np
 from PIL import ImageQt
 
 from img_processing import core
-from Gui.ui_main import Ui_MainWindow
+from Gui.ui_main_new import Ui_MainWindow
 
 
 class MainWindow(QMainWindow):
