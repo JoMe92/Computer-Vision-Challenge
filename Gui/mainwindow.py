@@ -34,7 +34,8 @@ class MainWindow(QMainWindow):
         img = self.image
         if self.image is None:
             print("img is empty")
-            pass
+            self.image = cv2.imread(r"Gui\ProgramImages\img.jpg")
+            self.setPhoto(self.image)
         else:
             self.setPhoto(self.image)
         

@@ -34,7 +34,7 @@ class Ui_MainWindow(object):
         self.label.setObjectName(u"label")
         self.label.setCursor(QCursor(Qt.SizeVerCursor))
         self.label.setContextMenuPolicy(Qt.DefaultContextMenu)
-        self.label.setPixmap(QPixmap(u"ProgramImages/img.png"))
+        self.label.setPixmap(QPixmap(u"Gui\ProgramImages\img.png"))
         self.label.setScaledContents(False)
         self.label.setAlignment(Qt.AlignCenter)
         self.label.setWordWrap(False)
@@ -95,7 +95,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Taymer Computer Vision Challenge", None))
         self.label.setText("")
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Save Img", None))
 #if QT_CONFIG(shortcut)
