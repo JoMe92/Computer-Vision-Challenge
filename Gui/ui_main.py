@@ -70,11 +70,11 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(QtWidgets.QApplication.translate("MainWindow", "Save", None, -1))
         self.pushButton_2.setShortcut(QtWidgets.QApplication.translate("MainWindow", "S", None, -1))
         self.pushButton_3.setText(QtWidgets.QApplication.translate("MainWindow", "Mesure", None, -1))
-        self.pushButton_3.setShortcut(QtWidgets.QApplication.translate("MainWindow", "M", None, -1))
+        self.pushButton_3.setShortcut(QtWidgets.QApplication.translate("MainWindow", "A", None, -1))
         self.pushButton.setText(QtWidgets.QApplication.translate("MainWindow", "Open", None, -1))
         self.pushButton.setShortcut(QtWidgets.QApplication.translate("MainWindow", "O", None, -1))
         self.pushButton_4.setText(QtWidgets.QApplication.translate("MainWindow", "Detect", None, -1))
-        self.pushButton_4.setShortcut(QtWidgets.QApplication.translate("MainWindow", "D", None, -1))
+        self.pushButton_4.setShortcut(QtWidgets.QApplication.translate("MainWindow", "B", None, -1))
 
 
 # if __name__ == "__main__":
