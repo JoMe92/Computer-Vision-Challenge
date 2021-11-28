@@ -144,7 +144,6 @@ class MainWindow(QMainWindow):
     def plot_diameterQt(self,coordinates,w):
         '''
         These functions draw a line at the given x-y position in an image.
-        
 
         '''
         x = coordinates[0]
