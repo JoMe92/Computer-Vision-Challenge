@@ -101,9 +101,9 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.pushButton_2.setShortcut(QCoreApplication.translate("MainWindow", u"S", None))
 #endif // QT_CONFIG(shortcut)
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Mesure ", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Measure  ", None))
 #if QT_CONFIG(shortcut)
-        self.pushButton_3.setShortcut(QCoreApplication.translate("MainWindow", u"M", None))
+        self.pushButton_3.setShortcut(QCoreApplication.translate("MainWindow", u"A", None))
 #endif // QT_CONFIG(shortcut)
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Open Img", None))
 #if QT_CONFIG(shortcut)
@@ -111,7 +111,7 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(shortcut)
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Detect", None))
 #if QT_CONFIG(shortcut)
-        self.pushButton_4.setShortcut(QCoreApplication.translate("MainWindow", u"D", None))
+        self.pushButton_4.setShortcut(QCoreApplication.translate("MainWindow", u"B", None))
 #endif // QT_CONFIG(shortcut)
     # retranslateUi
 

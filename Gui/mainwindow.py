@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
     def measure_dist(self):
         """ this function measures the diameter of the cable. The function is linked to the mesure button
         """
-        y1 = [50,300,950]
+        y1 = [50,750,950]
         img = self.image
         for y in y1:
             x, w = core.get_diameter(img, y)
@@ -76,7 +76,7 @@ class MainWindow(QMainWindow):
                 print("no scratches found")
             else:
                 for ce_co in center_coordinates:
-                    self.draw_Ellipse(ce_co,"Defect: scratch")
+                    self.draw_Ellipse(ce_co,"Defect: Scratch")
         
         # Clasification of a cut in the cable
         is_active = True
@@ -86,7 +86,7 @@ class MainWindow(QMainWindow):
                 print("no cut found")
             else:
                 for ce_co in center_coordinates_cut:
-                    self.draw_Ellipse(ce_co,"Defect: Cut {}".format(cut_nr))
+                    self.draw_Ellipse(ce_co,"Defect: Cut ")
                     cut_nr = cut_nr + 1
 
         # Clasification of a pin_hole in the cable
@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
                 for i in circles[0, :]:
                     center = (i[0], i[1]) # circle center
                     radius = i[2]
-                    self.draw_Ellipse(center,"Defect: pin_hole")
+                    self.draw_Ellipse(center,"Defect: Pin Hole")
 
         self.savePhoto()
 
@@ -107,7 +107,7 @@ class MainWindow(QMainWindow):
         This function saves the image with overlay
         '''
 
-        self.filename = 'defectoutput_'+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.png'
+        self.filename = 'Defectoutput_'+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.png'
         image = ImageQt.fromqpixmap(self.ui.label.grab())
         image.save(self.filename)
 
