@@ -27,7 +27,7 @@ Button | Description |Shortcut
 | :---: | :---: | :---:
 Open  | open a filebroser to load a image | o
 Save  | Screenshot of the program window  | s
-Mesure  | Measure the width of the Cabel | a
+Measure  | Measure the width of the Cabel | a
 Detect  | Label the found defects and make a screnshoot | b
 
 Note:
