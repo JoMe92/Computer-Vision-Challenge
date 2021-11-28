@@ -1,6 +1,6 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtWidgets import QMainWindow, QFileDialog
-import cv2, time, imutils, os, numpy as np
+import cv2, time, os, numpy as np
 from PIL import ImageQt
 
 from img_processing import core
