@@ -31,10 +31,9 @@ Measure  | Measure the width of the Cabel | a
 Detect  | Label the found defects and make a screnshoot | b
 
 Note:
-There is no scaling of the images, so currently it is only possible to view the images if the monitor used has a better resolution than the image to be displayed.
+There is no scaling of the images, so currently it is only possible to view the images if the monitor used has a better resolution than the image to be displayed. The following figure shows an image that was loaded and analyzed.
 
-Die nachfolgende abbildung zeigt ein bild das geladen und analysirt wurde.
-<img src="https://github.com/JoMe92/Taymer-Computer-Vision-Challenge/blob/main/Output%20Images/GUI01.jpg" align="center"
+<img src="https://github.com/JoMe92/Taymer-Computer-Vision-Challenge/blob/main/Output%20Images/GUIDemo.jpg" align="center"
      alt="img" >
 
 
