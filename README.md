@@ -116,5 +116,5 @@ pip install -r /path/to/requirements.txt
 ```
 Then you can use Payinstaller to compile the program.
 ```
-payinstaller -w --onefile main.py
+pyinstaller -w --onefile main.py
 ```
