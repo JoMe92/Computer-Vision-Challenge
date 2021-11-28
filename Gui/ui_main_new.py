@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainqMoIIN.ui'
+## Form generated from reading UI file 'main_newyGwcGk.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.0
 ##
@@ -16,11 +16,12 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
 from PySide2.QtWidgets import *
 
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1580, 858)
+        MainWindow.resize(370, 565)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_2 = QGridLayout(self.centralwidget)
@@ -31,9 +32,12 @@ class Ui_MainWindow(object):
 
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
-        self.label.setPixmap(QPixmap(':/ProgramImages/1618324317566.jpg'))
+        self.label.setCursor(QCursor(Qt.SizeVerCursor))
+        self.label.setContextMenuPolicy(Qt.DefaultContextMenu)
+        self.label.setPixmap(QPixmap(u"ProgramImages/img.png"))
         self.label.setScaledContents(False)
         self.label.setAlignment(Qt.AlignCenter)
+        self.label.setWordWrap(False)
 
         self.gridLayout_2.addWidget(self.label, 0, 0, 1, 2)
 
@@ -76,7 +80,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1580, 21))
+        self.menubar.setGeometry(QRect(0, 0, 370, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -86,10 +90,6 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(shortcut)
 
         self.retranslateUi(MainWindow)
-        # self.pushButton.clicked.connect(self.label.clear)
-        # self.pushButton_2.clicked.connect(self.label.clear)
-        # self.pushButton_3.clicked.connect(self.label.clear)
-        # self.pushButton_4.clicked.connect(self.label.clear)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -97,15 +97,15 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.label.setText("")
-        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Save", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Save Img", None))
 #if QT_CONFIG(shortcut)
         self.pushButton_2.setShortcut(QCoreApplication.translate("MainWindow", u"S", None))
 #endif // QT_CONFIG(shortcut)
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Mesure", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Mesure ", None))
 #if QT_CONFIG(shortcut)
         self.pushButton_3.setShortcut(QCoreApplication.translate("MainWindow", u"M", None))
 #endif // QT_CONFIG(shortcut)
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Open", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Open Img", None))
 #if QT_CONFIG(shortcut)
         self.pushButton.setShortcut(QCoreApplication.translate("MainWindow", u"O", None))
 #endif // QT_CONFIG(shortcut)
