@@ -5,3 +5,4 @@ Pillow==8.4.0
 PySide2==5.15.2
 setuptools==58.0.4
 opencv-python==4.4.0.40
+pyinstaller==4.7

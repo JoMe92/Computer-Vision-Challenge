@@ -12,7 +12,7 @@ Contents
  * [User interface](#user-interface)
  * [Program Structure](#program-structure)
  * [Used Algorithms](#used-algorithms)
- * [Usage](#usage)
+ * [Installation](#installation)
  <!--- * [Installation](#installation) --->
 
 ## User interface
@@ -41,44 +41,43 @@ Die nachfolgende abbildung zeigt ein bild das geladen und analysirt wurde.
 ## Program Structure
 ---
 
-
-* [doc/](.\Taymer-Computer-Vision-Challenge\doc)                                   
-  * [Gui/](.\Taymer-Computer-Vision-Challenge\doc\Gui)
-  * [img_processing/](.\Taymer-Computer-Vision-Challenge\doc\img_processing)
-
-* [Gui/](.\Taymer-Computer-Vision-Challenge\Gui)  
-  * [ProgramImages/](.\Taymer-Computer-Vision-Challenge\Gui\ProgramImages)
-  * [main.ui](.\Taymer-Computer-Vision-Challenge\Gui\main.ui)
-  * [mainwindow.py](.\Taymer-Computer-Vision-Challenge\Gui\mainwindow.py)
-  * [main_new.ui](.\Taymer-Computer-Vision-Challenge\Gui\main_new.ui)
-  * [ui_main.py](.\Taymer-Computer-Vision-Challenge\Gui\ui_main.py)
-  * [ui_main_new.py](.\Taymer-Computer-Vision-Challenge\Gui\ui_main_new.py)
-
-* [img_processing/](.\Taymer-Computer-Vision-Challenge\img_processing)
-  * [core.py](.\Taymer-Computer-Vision-Challenge\img_processing\core.py)
-
-* [test/](.\Taymer-Computer-Vision-Challenge\test)
-  * [gabor_filters.py](.\Taymer-Computer-Vision-Challenge\test\gabor_filters.py)
-  * [gabor_filter_banks.py](.\Taymer-Computer-Vision-Challenge\test\gabor_filter_banks.py)
-  * [get_center.py](.\Taymer-Computer-Vision-Challenge\test\get_center.py)
-  * [get_cut_gabor.py](.\Taymer-Computer-Vision-Challenge\test\get_cut_gabor.py)
-  * [get_dist.py](.\Taymer-Computer-Vision-Challenge\test\get_dist.py)
-  * [get_pin_hole.py](.\Taymer-Computer-Vision-Challenge\test\get_pin_hole.py)
-  * [get_scratch.py](.\Taymer-Computer-Vision-Challenge\test\get_scratch.py)
-  * [glcm.py](.\Taymer-Computer-Vision-Challenge\test\glcm.py)
-  * [glcm_mask.py](.\Taymer-Computer-Vision-Challenge\test\glcm_mask.py)
-  * [test.py](.\Taymer-Computer-Vision-Challenge\test\test.py)
-
-* [main.py](.\Taymer-Computer-Vision-Challenge\main.py)
+     Taymer-Computer-Vision-Challenge/
+     ┣ doc/
+     ┃ ┣ Gui/
+     ┃ ┣ img_processing/
+     ┃ ┗ Taymer Computer Vision Challenge.pdf
+     ┣ Gui/
+     ┃ ┣ ProgramImages/
+     ┃ ┣ main.ui
+     ┃ ┣ mainwindow.py
+     ┃ ┣ main_new.ui
+     ┃ ┣ ui_main.py
+     ┃ ┣ ui_main_new.py
+     ┃ ┗ __init__.py
+     ┣ img_processing/
+     ┃ ┗ core.py
+     ┣ test/
+     ┃ ┣ gabor_filters.py
+     ┃ ┣ gabor_filter_banks.py
+     ┃ ┣ get_center.py
+     ┃ ┣ get_cut_gabor.py
+     ┃ ┣ get_dist.py
+     ┃ ┣ get_pin_hole.py
+     ┃ ┣ get_scratch.py
+     ┃ ┣ glcm.py
+     ┃ ┣ glcm_mask.py
+     ┃ ┗ test.py
+     ┣ main.py
+     ┣ README.md
+     ┣ requirements.txt
+     ┗setup.py
+          
 
 
 The doc folder contains the documentation of the project. An automatic html document was created from the docstrings that were used. The source code of the application is located in the Gui and img_processing folders. The graphical user interface was realized with QT and pyside2. The layout of the gui can be found in the main.ui file. The logic behind the user interactions is in the file mainwindow.py . In the file mainwindow.py is defined which functions are called when a user interacts with the userinterface. The functions needed to process the images are stored in the folder img_processing in the file core.py. For the functions OPenCv was used to analyze different image features. In order to apply and test the various image processing algorithms, the files for testing the individual functions of the core library are located in the Test folder. The main folder Taymer-Computer-Vision-Challenge contains the main.py file that starts the application.
 
 
-
-
-
-## Used algorithms 
+## Used Image processing Algorithms 
 ---
 
 #### Grey-level Cooccurrence Matrix (GLCM)
@@ -101,29 +100,21 @@ In the tutorial "[What are Gabor filters?](https://www.youtube.com/watch?v=QEz4b
 The orientation of the cursor was chosen horizontally in order to segment lateral cuts. Es wurden Folgende PArameter verwendet: ksize = 50, sigma = 3, theta = 1*np.pi*1/2, lamda = 1*np.pi *1/4, gamma = 0.7, phi = 0  
 In conclusion, the Gabor filter is well suited for defect detection when the direction of the defect is already known. 
 
-By using a larger dataset, a classifier could be developed using SVM or Random Forest. First, the Gabor filter would be parameterized for classification purposes "[How to create Gabor feature banks](https://www.youtube.com/watch?v=BTbIS1mriuY)". Afterwards, the classifier can be trained with the data and a test train split "[Training RF](https://www.youtube.com/watch?v=XmRKkMjD8hM&t=563s
-)". In the video "[Image Segmentation](https://www.youtube.com/watch?v=f205EmfXi84)" Describes how the model can be saved and used for classification
-### to Read
-local binary pattern (LBP)
+###  Ccircle Hough Transform
+The circle Hough Transform (CHT) is a basic feature extraction technique used in digital image processing for detecting circles in imperfect images. The circle candidates are produced by “voting” in the Hough parameter space and then selecting local maxima in an accumulator matrix.[[Wikipedia](https://en.wikipedia.org/wiki/Circle_Hough_Transform)] [[OpenCv](https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d)]
 
-scale-invariant feature transform (SIFT) 
 
-Histograms of oriented gradient (HOG) 
 
-Speeded up robust features (SURF) 
+##  Installation
 
-binary robust independent elementary features (BRIEF)
+### Build from source
 
-oriented FAST and rotated BRIEF (ORB)
+In order to build the project from the sourch code, you must first install the necessary modules.
 
-completed local binary pattern (CLBP)
-
-elliptical local binary pattern (ELBP) 
-
-adjacent evaluation completed local binary pattern (AECLBP)
-
-robust local binary pattern (RLBP)
-
- discriminant manifold regularized local descriptor (DMRLD) 
-
-SVMs are suitable for small and medium-sized data samples 
+```
+pip install -r /path/to/requirements.txt
+```
+Then you can use Payinstaller to compile the program.
+```
+payinstaller -w --onefile main.py
+```
