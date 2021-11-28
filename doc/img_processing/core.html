@@ -30,6 +30,74 @@
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="img_processing.core.distance_blob"><code class="name flex">
+<span>def <span class="ident">distance_blob</span></span>(<span>kpt1, kpt2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function calculates the distance between two blob's</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>kpt1</code></strong> :&ensp;<code>keypoints</code></dt>
+<dd>first keypoints from cv2.SimpleBlobDetector_create(params).detect(img)</dd>
+<dt><strong><code>kpt2</code></strong> :&ensp;<code>keypoints</code></dt>
+<dd>second keypoints from cv2.SimpleBlobDetector_create(params).detect(img)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>dist</code></strong> :&ensp;<code>float</code></dt>
+<dd>Distance between keypoints in pixels</dd>
+</dl></div>
+</dd>
+<dt id="img_processing.core.distance_center_coordinates"><code class="name flex">
+<span>def <span class="ident">distance_center_coordinates</span></span>(<span>center_coordinates_1, center_coordinates_2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function calculates the distance between two center coordinates. The coordinates must be given as tuples (x, y)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>center_coordinates_1</code></strong> :&ensp;<code>tuple</code> of <code>int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>center_coordinates_1</code></strong> :&ensp;<code>tuple</code> of <code>int</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>dist</code></strong> :&ensp;<code>float</code></dt>
+<dd>Distance between center coordinates in pixels</dd>
+</dl></div>
+</dd>
+<dt id="img_processing.core.get_center"><code class="name flex">
+<span>def <span class="ident">get_center</span></span>(<span>cnts)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function calculates the center point of a contour stored as arrays</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>cnts</code></strong> :&ensp;<code>array</code></dt>
+<dd>Detected contours stored as a vector of points</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>coordinates</code></strong> :&ensp;<code>Tuple</code> of <code>Int</code></dt>
+<dd>The (x,y) coordinate of the center point</dd>
+</dl></div>
+</dd>
+<dt id="img_processing.core.get_cut"><code class="name flex">
+<span>def <span class="ident">get_cut</span></span>(<span>img)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The function checks if there is a horizontal cut in the cable., The image to be analyzed should be in b-g-r pixel format</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>img</code></strong> :&ensp;<code>Array</code> of <code>uint8</code></dt>
+<dd>the input image to be analyzed</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>center_coordinates</code></strong> :&ensp;<code>list</code> of <code>tuples with int</code></dt>
+<dd>each tuple contains the x and y coordinates of the center of gravity of the defect</dd>
+</dl></div>
+</dd>
 <dt id="img_processing.core.get_diameter"><code class="name flex">
 <span>def <span class="ident">get_diameter</span></span>(<span>img, y1)</span>
 </code></dt>
@@ -48,6 +116,79 @@
 <dd>the x position at which the measurement begins</dd>
 <dt><strong><code>w</code></strong> :&ensp;<code>int</code></dt>
 <dd>the diameter of the cable in pixels</dd>
+</dl></div>
+</dd>
+<dt id="img_processing.core.get_pin_hole"><code class="name flex">
+<span>def <span class="ident">get_pin_hole</span></span>(<span>img)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function searches for pinholes in the cable</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>img</code></strong> :&ensp;<code>Array</code> of <code>uint8</code></dt>
+<dd>The image to be analyzed in a cv2 bgr format</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>circles</code></strong> :&ensp;<code>list</code> of <code>tuple with int</code></dt>
+<dd>Output vector of found circles. Each vector is encoded as 3 or 4 element floating-point vector (x,y,radius) or (x,y,radius,votes)</dd>
+</dl></div>
+</dd>
+<dt id="img_processing.core.get_scratches"><code class="name flex">
+<span>def <span class="ident">get_scratches</span></span>(<span>img)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The function checks if there is a scratch on the cable. The image to be examined should be in b-g-r pixel format</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>img</code></strong> :&ensp;<code>Array</code> of <code>uint8</code></dt>
+<dd>The image in which the values are to be drawn</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>center_coordinates :List with tuple</code> of <code>int</code></dt>
+<dd>the center
+(x,y) of the scratch</dd>
+</dl></div>
+</dd>
+<dt id="img_processing.core.label_defect"><code class="name flex">
+<span>def <span class="ident">label_defect</span></span>(<span>img, coordinates, defect_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>the function adds a label to the given coordinates. The annotation will be written directly into the image. for an overlay use the QT based functions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>img</code></strong> :&ensp;<code> Array</code> of <code>uint8</code></dt>
+<dd>The image in which the values are to be drawn</dd>
+<dt><strong><code>coordinates</code></strong> :&ensp;<code>tuple</code> of <code>int</code></dt>
+<dd>the center
+(x,y) of the defect</dd>
+<dt><strong><code>defect_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the error</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>img</code></strong> :&ensp;<code>Array</code> of <code>uint8</code></dt>
+<dd>the image with the marking</dd>
+</dl></div>
+</dd>
+<dt id="img_processing.core.mark_defect"><code class="name flex">
+<span>def <span class="ident">mark_defect</span></span>(<span>img, center_coordinates)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function draws a red circle around given coordinates. The annotation will be written directly into the image. for an overlay use the QT based functions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>img</code></strong> :&ensp;<code>Array</code> of <code>uint8</code></dt>
+<dd>The image in which the values are to be drawn</dd>
+<dt><strong><code>center_coordinates</code></strong> :&ensp;<code>tuple</code> of <code>int</code></dt>
+<dd>the center
+(x,y) of the defect</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>img</code></strong> :&ensp;<code>Array</code> of <code>uint8</code></dt>
+<dd>the image with the marking</dd>
 </dl></div>
 </dd>
 <dt id="img_processing.core.plot_diameter"><code class="name flex">
@@ -90,7 +231,15 @@
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="img_processing.core.distance_blob" href="#img_processing.core.distance_blob">distance_blob</a></code></li>
+<li><code><a title="img_processing.core.distance_center_coordinates" href="#img_processing.core.distance_center_coordinates">distance_center_coordinates</a></code></li>
+<li><code><a title="img_processing.core.get_center" href="#img_processing.core.get_center">get_center</a></code></li>
+<li><code><a title="img_processing.core.get_cut" href="#img_processing.core.get_cut">get_cut</a></code></li>
 <li><code><a title="img_processing.core.get_diameter" href="#img_processing.core.get_diameter">get_diameter</a></code></li>
+<li><code><a title="img_processing.core.get_pin_hole" href="#img_processing.core.get_pin_hole">get_pin_hole</a></code></li>
+<li><code><a title="img_processing.core.get_scratches" href="#img_processing.core.get_scratches">get_scratches</a></code></li>
+<li><code><a title="img_processing.core.label_defect" href="#img_processing.core.label_defect">label_defect</a></code></li>
+<li><code><a title="img_processing.core.mark_defect" href="#img_processing.core.mark_defect">mark_defect</a></code></li>
 <li><code><a title="img_processing.core.plot_diameter" href="#img_processing.core.plot_diameter">plot_diameter</a></code></li>
 </ul>
 </li>

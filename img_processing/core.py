@@ -131,14 +131,14 @@ def distance_blob(kpt1, kpt2):
     return dist
 
 def distance_center_coordinates(center_coordinates_1,center_coordinates_2):
-    '''This function calculates the distance between two center coordinates
+    '''This function calculates the distance between two center coordinates. The coordinates must be given as tuples (x, y)
     
     Parameters
     ----------
-    center_coordinates_1 : int
+    center_coordinates_1 : tuple of int
         
 
-    center_coordinates_1 : int
+    center_coordinates_1 : tuple of int
         
     Returns
     -------
@@ -150,7 +150,7 @@ def distance_center_coordinates(center_coordinates_1,center_coordinates_2):
 
     x1 = center_coordinates_2[0]
     y1 = center_coordinates_2[1]
-    #return distance, calculted by pythagoras
+    #return distance, calculted by Pythagoras 
     dist = np.sqrt(np.abs((x0-x1))^2+np.abs((y0-y1))^2)
 
     return dist
@@ -158,7 +158,7 @@ def distance_center_coordinates(center_coordinates_1,center_coordinates_2):
 
 def get_scratches(img):
     '''
-    The function checks if there is a scratch on the cable
+    The function checks if there is a scratch on the cable. The image to be examined should be in b-g-r pixel format
 
     Parameters
     ----------
@@ -174,30 +174,27 @@ def get_scratches(img):
     
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray,(25,25),0)
-
+    #Preprocessing
     sobelxy = cv2.Sobel(gray,cv2.CV_64F,1,1,ksize=5)  
-    sobelxy = cv2.convertScaleAbs(sobelxy) # covert to 8-bit
-    
+    sobelxy = cv2.convertScaleAbs(sobelxy) # covert to 8-bit 
     ret, th = cv2.threshold(sobelxy, 6, 255, cv2.THRESH_BINARY)
     kernel = np.ones((3,3),np.uint8)
     opening = cv2.morphologyEx(th, cv2.MORPH_OPEN, kernel)
     kernel = np.ones((4,4),np.uint8)
     closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
     
+    # blob dedection
     params = cv2.SimpleBlobDetector_Params()
     # Filter by Area.
     params.minDistBetweenBlobs = 500
     params.filterByArea = True
     params.minArea = 7
-
+    # Result
     detector = cv2.SimpleBlobDetector_create(params)
-    # Detect blobs.
     keypoints = detector.detect(closing)
 
-    # print("Blob Distance: " + str(distance(keypoints[0], keypoints[1])))
 
     if not keypoints:
-        print("No scratch were  found")
         return 0
     
     else:
@@ -207,22 +204,19 @@ def get_scratches(img):
         # for key in keypoints:
 
         for i in np.arange(0,len(keypoints),1):
-            if len(keypoints) > 1:
-                print("Blob Distance: " + str(distance_blob(keypoints[i], keypoints[i + 1])))
+            if len(keypoints) > 1: # Calculate the distance between the current blob and the last blob 
+                print("Blob Distance: " + str(distance_blob(keypoints[i], keypoints[i + 1]))) # can be used as a filter option see get_cut function
 
             area.append(keypoints[i].size)
             coordinates.append(keypoints[i].pt)
-            # area.append(key.size)
-            # coordinates.append(key.pt)
-            
-        # center_coordinates = (int(coordinates[0][0]), int(coordinates[0][1]))
-        
+
         return coordinates
     
 
 def get_cut(img):
     '''
-    The function checks if there is a horizontal cut in the cable
+    The function checks if there is a horizontal cut in the cable., The image to be analyzed should be in b-g-r pixel format
+
 
     Parameters
     ----------
@@ -239,9 +233,7 @@ def get_cut(img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # mask = img > 35
     # img[~mask] = 0
-
-
-
+    # gabor filter to get horizontal frequencies
     ksize = 50  #Use size that makes sense to the image and fetaure size. Large may not be good. 
     sigma = 3 #Large sigma on small features will fully miss the features. 
     theta = 1*np.pi*1/2  # Horizintal lines
@@ -250,16 +242,18 @@ def get_cut(img):
     phi = 0  #Phase offset. I leave it to 0. 
     kernel = cv2.getGaborKernel((ksize, ksize), sigma, theta, lamda, gamma, phi, ktype=cv2.CV_32F)
     fimg = cv2.filter2D(img, cv2.CV_8UC3, kernel)
-    # plt.imshow(fimg, cmap=plt.cm.gray)
     
+    # Postprocessing
     ret, th = cv2.threshold(fimg, 35, 255, cv2.THRESH_BINARY)
     kernel = np.ones((2,2),np.uint8)
     opening = cv2.morphologyEx(th, cv2.MORPH_OPEN, kernel)
     dilation = cv2.dilate(opening,kernel,iterations = 6)
     
+    # find the defect
     cnts = cv2.findContours(dilation, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     cnts = cnts[0]
 
+    # Filter the results according to the defect area and the distance of the defects to each other
     center_coordinates = []
     n = 0
     for i in np.arange(0,len(cnts),1):
@@ -280,7 +274,7 @@ def get_cut(img):
 
 def get_pin_hole(img):
     '''
-    this function searches for pinholes in the cable
+    This function searches for pinholes in the cable
     
     Parameters
     ----------
@@ -305,7 +299,7 @@ def get_pin_hole(img):
 
 def mark_defect(img, center_coordinates):
     '''
-    This function draws a red circle around given coordinates
+    This function draws a red circle around given coordinates. The annotation will be written directly into the image. for an overlay use the QT based functions.
     
 
     Parameters
@@ -335,7 +329,7 @@ def mark_defect(img, center_coordinates):
 
 def label_defect(img, coordinates, defect_name):
     '''
-    the function adds a label to the given coordinates
+    the function adds a label to the given coordinates. The annotation will be written directly into the image. for an overlay use the QT based functions.
 
     Parameters
     ----------

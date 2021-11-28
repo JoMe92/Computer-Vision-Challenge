@@ -8,29 +8,23 @@ from Gui.ui_main import Ui_MainWindow
 
 
 class MainWindow(QMainWindow):
+
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         
-
         # Call the corresponding functions when interacting with the gui
         self.ui.pushButton.clicked.connect(self.loadImage)
         self.ui.pushButton_2.clicked.connect(self.savePhoto)
         self.ui.pushButton_3.clicked.connect(self.measure_dist)
         self.ui.pushButton_4.clicked.connect(self.detect_defect)
 
-
         # initalization of the default parameters
         self.filename = 'Img_'+str(time.strftime("%Y-%b-%d_at_%H.%M.%S %p"))+'.png' # Will hold the image address location
         self.tmp = None # Will hold the temporary image for display
         self.image = None # Will hold        self.show_fft()
-
-        # self.loadImage()
-        
-        # self.setPhoto(self.image)
-        
-
 
     def loadImage(self):
         """ This function will load the Image
@@ -38,12 +32,6 @@ class MainWindow(QMainWindow):
         self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
         self.image = cv2.imread(self.filename)
         img = self.image
-        self.x_size = img.shape[0]
-        self.y_size = img.shape[1]
-
-
-    
-
         if self.image is None:
             print("img is empty")
             pass
@@ -52,9 +40,7 @@ class MainWindow(QMainWindow):
         
 
     def setPhoto(self,img):
-        """ This function will take image input and resize it
-            only for display purpose and convert it to QImage
-            to set at the label.
+        """ This function will take image input and  and convert it to QImage to set at the label.
         """
         self.tmp = img
         # img = imutils.resize(img,width=640)
@@ -65,7 +51,7 @@ class MainWindow(QMainWindow):
         self.ui.label.setGeometry(0, 0, self.x_size, self.y_size)
 
     def measure_dist(self):
-        """ this function measures the diameter of the cable
+        """ this function measures the diameter of the cable. The function is linked to the mesure button
         """
         y1 = [50,300,950]
         img = self.image
@@ -75,11 +61,13 @@ class MainWindow(QMainWindow):
 
 
     def detect_defect(self):
-        """ This function classifies the defect
+        """ This function classifies the defects found in the loaded image. Via the is_active flag the individual inspections can be switched on or off.
+        The coordinates of the respective defect are determined for display. These coordinates are passed on to a function in order to place an annotation as an overlay on the image. 
         """
+
         image_disp = self.image
         cut_nr = 1
-        # Clasification of a scratch in the image
+        # Clasification of a scratch in the cable
         is_active = False
         if is_active == True:
            
@@ -90,43 +78,47 @@ class MainWindow(QMainWindow):
                 for ce_co in center_coordinates:
                     self.draw_Ellipse(ce_co,"Defect: scratch")
         
+        # Clasification of a cut in the cable
+        is_active = True
+        if is_active == True:
+            center_coordinates_cut = core.get_cut(image_disp) 
+            if not center_coordinates_cut:
+                print("no cut found")
+            else:
+                for ce_co in center_coordinates_cut:
+                    self.draw_Ellipse(ce_co,"Defect: Cut {}".format(cut_nr))
+                    cut_nr = cut_nr + 1
 
-        # Clasification of a cut in the image
-        center_coordinates_cut = core.get_cut(image_disp) 
-        if not center_coordinates_cut:
-            print("no cut found")
-        else:
-            for ce_co in center_coordinates_cut:
-                self.draw_Ellipse(ce_co,"Defect: Cut {}".format(cut_nr))
-                cut_nr = cut_nr + 1
-
-        # Clasification of a pin_hole in the image
-        circles  = core.get_pin_hole(image_disp) 
-        if circles is not None:
-            circles = np.uint16(np.around(circles))
-            for i in circles[0, :]:
-                center = (i[0], i[1]) # circle center
-                radius = i[2]
-                self.draw_Ellipse(center,"Defect: pin_hole")
+        # Clasification of a pin_hole in the cable
+        is_active = True
+        if is_active == True:
+            circles  = core.get_pin_hole(image_disp) 
+            if circles is not None:
+                circles = np.uint16(np.around(circles))
+                for i in circles[0, :]:
+                    center = (i[0], i[1]) # circle center
+                    radius = i[2]
+                    self.draw_Ellipse(center,"Defect: pin_hole")
 
 
     def savePhoto(self):
-        """ This function will save the image"""
+        '''
+        This function saves the image with overlay
+        '''
 
         self.filename = 'defectoutput_'+str(time.strftime("%Y-%b-%d at %H.%M.%S %p"))+'.png'
-
         image = ImageQt.fromqpixmap(self.ui.label.grab())
         image.save(self.filename)
 
 
     def draw_Ellipse(self,coordinates,text):
-        '''This function draws a red elypse around the center point which is passed as (x,y) tuple.
-        
+        '''
+        This function draws a red elypse around the center point which is passed as (x,y) tuple.
         '''
         x = coordinates[0]
         y = coordinates[1]
-        print('center Point x: ' + str(x ))
-        print('center Point y: ' + str(y ))
+        # print('center Point x: ' + str(x ))
+        # print('center Point y: ' + str(y ))
         rx = 80
         ry = 120
         painter = QtGui.QPainter(self.ui.label.pixmap())
@@ -152,28 +144,13 @@ class MainWindow(QMainWindow):
     def plot_diameterQt(self,coordinates,w):
         '''
         These functions draw a line at the given x-y position in an image.
-
-        Parameters
-        ----------
-        x : int
-            x position of the drawing.
-            
-        y1 : int
-            y position of the drawing.
-            
-        w : int
-            line width.
-
-        Returns
-        -------
-        None
+        
 
         '''
         x = coordinates[0]
         y = coordinates[1]
-        print('center Point x: ' + str(x ))
-        print('center Point y: ' + str(y ))
-        print("start")
+        # print('center Point x: ' + str(x ))
+        # print('center Point y: ' + str(y ))
         painter = QtGui.QPainter(self.ui.label.pixmap())
         pen = QtGui.QPen()
         pen.setWidth(5)
